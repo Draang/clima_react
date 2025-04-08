@@ -1,14 +1,17 @@
 import styles from "./Form.module.css";
 import { countries } from "../../data/countries";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import type { SearchType } from "../../types";
-
-export default function Form() {
+import Alert from "../Alert/Alert";
+type FormProps = {
+  fetchWeather: () => void;
+};
+export default function Form({ fetchWeather }: FormProps) {
   const [search, setSearch] = useState<SearchType>({
     city: "",
     country: "",
   });
-
+  const [alert, setAlert] = useState("");
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ): void => {
@@ -16,10 +19,21 @@ export default function Form() {
     setSearch({ ...search, [name]: value });
   };
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    if (Object.values(search).includes("")) {
+      console.error("hay cambios vacios");
+      setAlert("Todos los campos son obligatorios");
+      return;
+    }
+    fetchWeather();
+  };
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      {alert && <Alert>{alert}</Alert>}
       <div className={styles.field}>
-        <label htmlFor="city">Ciudad</label>
+        <label htmlFor="city">Ciudad:</label>
         <input
           type="text"
           name="city"
@@ -30,7 +44,7 @@ export default function Form() {
         />
       </div>
       <div className={styles.field}>
-        <label htmlFor="country">Pais</label>
+        <label htmlFor="country">Pais:</label>
         <select
           name="country"
           id="country"
