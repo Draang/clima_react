@@ -7,13 +7,14 @@
   width: 95%;
   max-width: 100rem;
   margin: 0 auto;
+  gap: 5rem;
 }
 @media (min-width: 768px) {
   .container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
-    gap: 4rem;
+    gap: 5rem;
     margin-top: 4rem;
   }
 }
