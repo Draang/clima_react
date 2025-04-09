@@ -51,7 +51,7 @@ export default function useWeather() {
   const getGeo = async (
     search: SearchType
   ): Promise<{ lat: number; lon: number }> => {
-    const geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${search.city},${search.country}&appid=${appId}`;
+    const geoURL = `https://api.openweathermap.org/geo/1.0/direct?q=${search.city},${search.country}&appid=${appId}`;
     const { data } = await axios.get(geoURL);
     if (!data[0]) {
       console.log("clima no encontrado");
